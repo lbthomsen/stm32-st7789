@@ -1,4 +1,4 @@
-#include "../../libs/st7789/fonts.h"
+#include "fonts.h"
 
 static const uint16_t Font7x10 [] = {
 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,  // sp

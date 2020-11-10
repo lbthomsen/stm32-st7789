@@ -2,11 +2,13 @@
 #define __ST7789_H
 
 #include "main.h"
-#include "../../libs/st7789/fonts.h"
+#include "fonts.h"
 
 /* choose a Hardware SPI port to use. */
-#define ST7789_SPI_PORT hspi1
-extern SPI_HandleTypeDef ST7789_SPI_PORT;
+//#define ST7789_SPI_PORT ST7789_SPI
+//extern SPI_HandleTypeDef ST7789_SPI_PORT
+
+SPI_HandleTypeDef *hspi;
 
 /**
  * if you predefined pin names in CubeMX, 
