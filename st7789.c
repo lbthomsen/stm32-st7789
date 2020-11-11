@@ -642,9 +642,9 @@ void ST7789_TearEffect(uint8_t tear)
  */
 void ST7789_Test(void)
 {
-	ST7789_Fill_Color(WHITE);
+	ST7789_Fill_Color(BLACK);
 	HAL_Delay(1000);
-	ST7789_WriteString(10, 20, "Speed Test", Font_11x18, RED, WHITE);
+	ST7789_WriteString(10, 20, "Speed Test", Font_11x18, RED, BLACK);
 	HAL_Delay(1000);
 	ST7789_Fill_Color(CYAN);
 	ST7789_Fill_Color(RED);
@@ -658,47 +658,55 @@ void ST7789_Test(void)
 	ST7789_Fill_Color(LGRAY);
 	ST7789_Fill_Color(LBBLUE);
 	ST7789_Fill_Color(WHITE);
+	ST7789_Fill_Color(BLACK);
 	HAL_Delay(500);
 
-	ST7789_WriteString(10, 10, "Font test.", Font_16x26, GBLUE, WHITE);
-	ST7789_WriteString(10, 50, "Hello World!", Font_7x10, RED, WHITE);
-	ST7789_WriteString(10, 75, "Hello World!", Font_11x18, YELLOW, WHITE);
-	ST7789_WriteString(10, 100, "Hello World!", Font_16x26, MAGENTA, WHITE);
+	ST7789_WriteString(10, 10, "Font test.", Font_16x26, GBLUE, BLACK);
+	ST7789_WriteString(10, 50, "Hello World!", Font_7x10, RED, BLACK);
+	ST7789_WriteString(10, 75, "Hello World!", Font_11x18, YELLOW, BLACK);
+	ST7789_WriteString(10, 100, "Hello World!", Font_16x26, MAGENTA, BLACK);
 	HAL_Delay(1000);
 
-	ST7789_Fill_Color(RED);
-	ST7789_WriteString(10, 10, "Rect./Line.", Font_11x18, YELLOW, RED);
-	ST7789_DrawRectangle(30, 30, 100, 100, WHITE);
+	ST7789_Fill_Color(BLACK);
+	ST7789_WriteString(10, 10, "Rect./Line.", Font_11x18, YELLOW, BLACK);
+	ST7789_DrawRectangle(40, 40, 200, 200, WHITE);
 	HAL_Delay(1000);
 
-	ST7789_Fill_Color(RED);
-	ST7789_WriteString(10, 10, "Filled Rect.", Font_11x18, YELLOW, RED);
-	ST7789_DrawFilledRectangle(30, 30, 50, 50, WHITE);
+	ST7789_Fill_Color(BLACK);
+	ST7789_WriteString(10, 10, "Filled Rect.", Font_11x18, YELLOW, BLACK);
+	ST7789_DrawFilledRectangle(40, 40, 160, 160, WHITE);
 	HAL_Delay(1000);
 
-
-	ST7789_Fill_Color(RED);
-	ST7789_WriteString(10, 10, "Circle.", Font_11x18, YELLOW, RED);
-	ST7789_DrawCircle(60, 60, 25, WHITE);
+	ST7789_Fill_Color(BLACK);
+	ST7789_WriteString(10, 10, "Circle.", Font_11x18, YELLOW, BLACK);
+	ST7789_DrawCircle(120, 120, 60, WHITE);
 	HAL_Delay(1000);
 
-	ST7789_Fill_Color(RED);
-	ST7789_WriteString(10, 10, "Filled Cir.", Font_11x18, YELLOW, RED);
-	ST7789_DrawFilledCircle(60, 60, 25, WHITE);
+	ST7789_Fill_Color(BLACK);
+	ST7789_WriteString(10, 10, "Filled Cir.", Font_11x18, YELLOW, BLACK);
+	ST7789_DrawFilledCircle(120, 120, 60, WHITE);
 	HAL_Delay(1000);
 
-	ST7789_Fill_Color(RED);
-	ST7789_WriteString(10, 10, "Triangle", Font_11x18, YELLOW, RED);
+	ST7789_Fill_Color(BLACK);
+	ST7789_WriteString(10, 10, "Triangle", Font_11x18, YELLOW, BLACK);
 	ST7789_DrawTriangle(30, 30, 30, 70, 60, 40, WHITE);
 	HAL_Delay(1000);
 
-	ST7789_Fill_Color(RED);
-	ST7789_WriteString(10, 10, "Filled Tri", Font_11x18, YELLOW, RED);
+	ST7789_Fill_Color(BLACK);
+	ST7789_WriteString(10, 10, "Filled Tri", Font_11x18, YELLOW, BLACK);
 	ST7789_DrawFilledTriangle(30, 30, 30, 70, 60, 40, WHITE);
 	HAL_Delay(1000);
 
-	//	If FLASH cannot storage anymore datas, please delete codes below.
-	ST7789_Fill_Color(WHITE);
-	ST7789_DrawImage(0, 0, 128, 128, (uint16_t *)saber);
+	ST7789_Fill_Color(BLACK);
+	ST7789_DrawImage(0, 0, 240, 240, (uint16_t *)knky);
 	HAL_Delay(3000);
+
+	ST7789_Fill_Color(BLACK);
+	ST7789_DrawImage(0, 0, 240, 240, (uint16_t *)tek);
+	HAL_Delay(3000);
+
+	ST7789_Fill_Color(BLACK);
+	ST7789_DrawImage(0, 0, 240, 240, (uint16_t *)adi1);
+	HAL_Delay(3000);
+
 }
