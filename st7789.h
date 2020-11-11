@@ -197,7 +197,7 @@ SPI_HandleTypeDef *hspi;
 #define ABS(x) ((x) > 0 ? (x) : -(x))
 
 /* Basic functions. */
-void ST7789_Init(void);
+void ST7789_Init(SPI_HandleTypeDef *init_hspi);
 void ST7789_SetRotation(uint8_t m);
 void ST7789_Fill_Color(uint16_t color);
 void ST7789_DrawPixel(uint16_t x, uint16_t y, uint16_t color);

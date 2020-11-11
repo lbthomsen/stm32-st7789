@@ -9,7 +9,7 @@ static void ST7789_WriteCommand(uint8_t cmd)
 {
 	ST7789_Select();
 	ST7789_DC_Clr();
-	HAL_SPI_Transmit(&ST7789_SPI_PORT, &cmd, sizeof(cmd), HAL_MAX_DELAY);
+	HAL_SPI_Transmit(hspi, &cmd, sizeof(cmd), HAL_MAX_DELAY);
 	ST7789_UnSelect();
 }
 
@@ -28,7 +28,7 @@ static void ST7789_WriteData(uint8_t *buff, size_t buff_size)
 
 	while (buff_size > 0) {
 		uint16_t chunk_size = buff_size > 65535 ? 65535 : buff_size;
-		HAL_SPI_Transmit(&ST7789_SPI_PORT, buff, chunk_size, HAL_MAX_DELAY);
+		HAL_SPI_Transmit(hspi, buff, chunk_size, HAL_MAX_DELAY);
 		buff += chunk_size;
 		buff_size -= chunk_size;
 	}
@@ -44,7 +44,7 @@ static void ST7789_WriteSmallData(uint8_t data)
 {
 	ST7789_Select();
 	ST7789_DC_Set();
-	HAL_SPI_Transmit(&ST7789_SPI_PORT, &data, sizeof(data), HAL_MAX_DELAY);
+	HAL_SPI_Transmit(hspi, &data, sizeof(data), HAL_MAX_DELAY);
 	ST7789_UnSelect();
 }
 
@@ -108,8 +108,11 @@ static void ST7789_SetAddressWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint1
  * @param none
  * @return none
  */
-void ST7789_Init(void)
+void ST7789_Init(SPI_HandleTypeDef *init_hspi)
 {
+
+	hspi = init_hspi;
+
 	HAL_Delay(25);
     ST7789_RST_Clr();
     HAL_Delay(25);
