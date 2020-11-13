@@ -4,10 +4,7 @@
 #include "main.h"
 #include "fonts.h"
 
-/* choose a Hardware SPI port to use. */
-//#define ST7789_SPI_PORT ST7789_SPI
-//extern SPI_HandleTypeDef ST7789_SPI_PORT
-
+/* Hardware SPI port to use - passed to init */
 SPI_HandleTypeDef *hspi;
 
 /**
@@ -28,6 +25,10 @@ SPI_HandleTypeDef *hspi;
 #define BLK_PORT 
 #define BLK_PIN 
 ******************************************/
+
+/***** Set if CS is needed ***************/
+//#define ST7789_USE_CS
+/*****************************************/
 
 /**
  * Comment one to use another one.
@@ -191,8 +192,13 @@ SPI_HandleTypeDef *hspi;
 #define ST7789_DC_Clr() HAL_GPIO_WritePin(ST7789_DC_PORT, ST7789_DC_PIN, GPIO_PIN_RESET)
 #define ST7789_DC_Set() HAL_GPIO_WritePin(ST7789_DC_PORT, ST7789_DC_PIN, GPIO_PIN_SET)
 
-#define ST7789_Select() HAL_GPIO_WritePin(ST7789_CS_PORT, ST7789_CS_PIN, GPIO_PIN_RESET)
-#define ST7789_UnSelect() HAL_GPIO_WritePin(ST7789_CS_PORT, ST7789_CS_PIN, GPIO_PIN_SET)
+#ifdef ST7789_USE_CS
+	#define ST7789_Select() HAL_GPIO_WritePin(ST7789_CS_PORT, ST7789_CS_PIN, GPIO_PIN_RESET)
+	#define ST7789_UnSelect() HAL_GPIO_WritePin(ST7789_CS_PORT, ST7789_CS_PIN, GPIO_PIN_SET)
+#else
+	#define ST7789_Select()
+	#define ST7789_UnSelect()
+#endif
 
 #define ABS(x) ((x) > 0 ? (x) : -(x))
 

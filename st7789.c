@@ -81,7 +81,7 @@ void ST7789_SetRotation(uint8_t m)
  */
 static void ST7789_SetAddressWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
 {
-	ST7789_Select();
+
 	uint16_t x_start = x0 + X_SHIFT, x_end = x1 + X_SHIFT;
 	uint16_t y_start = y0 + Y_SHIFT, y_end = y1 + Y_SHIFT;
 	
@@ -100,12 +100,12 @@ static void ST7789_SetAddressWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint1
 	}
 	/* Write to RAM */
 	ST7789_WriteCommand(ST7789_RAMWR);
-	ST7789_UnSelect();
+
 }
 
 /**
  * @brief Initialize ST7789 controller
- * @param none
+ * @param init_hspi -> pointer to hardware spi
  * @return none
  */
 void ST7789_Init(SPI_HandleTypeDef *init_hspi)
@@ -177,13 +177,13 @@ void ST7789_Fill_Color(uint16_t color)
 {
 	uint16_t i, j;
 	ST7789_SetAddressWindow(0, 0, ST7789_WIDTH - 1, ST7789_HEIGHT - 1);
-	ST7789_Select();
+
 	for (i = 0; i < ST7789_WIDTH; i++)
 		for (j = 0; j < ST7789_HEIGHT; j++) {
 			uint8_t data[] = {color >> 8, color & 0xFF};
 			ST7789_WriteData(data, sizeof(data));
 		}
-	ST7789_UnSelect();
+
 }
 
 /**
@@ -199,9 +199,9 @@ void ST7789_DrawPixel(uint16_t x, uint16_t y, uint16_t color)
 	
 	ST7789_SetAddressWindow(x, y, x, y);
 	uint8_t data[] = {color >> 8, color & 0xFF};
-	ST7789_Select();
+
 	ST7789_WriteData(data, sizeof(data));
-	ST7789_UnSelect();
+
 }
 
 /**
@@ -215,7 +215,7 @@ void ST7789_Fill(uint16_t xSta, uint16_t ySta, uint16_t xEnd, uint16_t yEnd, uin
 {
 	if ((xEnd < 0) || (xEnd >= ST7789_WIDTH) ||
 		 (yEnd < 0) || (yEnd >= ST7789_HEIGHT))	return;
-	ST7789_Select();
+
 	uint16_t i, j;
 	ST7789_SetAddressWindow(xSta, ySta, xEnd, yEnd);
 	for (i = ySta; i <= yEnd; i++)
@@ -223,7 +223,7 @@ void ST7789_Fill(uint16_t xSta, uint16_t ySta, uint16_t xEnd, uint16_t yEnd, uin
 			uint8_t data[] = {color >> 8, color & 0xFF};
 			ST7789_WriteData(data, sizeof(data));
 		}
-	ST7789_UnSelect();
+
 }
 
 /**
@@ -236,9 +236,9 @@ void ST7789_DrawPixel_4px(uint16_t x, uint16_t y, uint16_t color)
 {
 	if ((x <= 0) || (x > ST7789_WIDTH) ||
 		 (y <= 0) || (y > ST7789_HEIGHT))	return;
-	ST7789_Select();
+
 	ST7789_Fill(x - 1, y - 1, x + 1, y + 1, color);
-	ST7789_UnSelect();
+
 }
 
 /**
@@ -311,12 +311,12 @@ void ST7789_DrawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1,
  */
 void ST7789_DrawRectangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color)
 {
-	ST7789_Select();
+
 	ST7789_DrawLine(x1, y1, x2, y1, color);
 	ST7789_DrawLine(x1, y1, x1, y2, color);
 	ST7789_DrawLine(x1, y2, x2, y2, color);
 	ST7789_DrawLine(x2, y1, x2, y2, color);
-	ST7789_UnSelect();
+
 }
 
 /** 
@@ -334,7 +334,7 @@ void ST7789_DrawCircle(uint16_t x0, uint16_t y0, uint8_t r, uint16_t color)
 	int16_t x = 0;
 	int16_t y = r;
 
-	ST7789_Select();
+
 	ST7789_DrawPixel(x0, y0 + r, color);
 	ST7789_DrawPixel(x0, y0 - r, color);
 	ST7789_DrawPixel(x0 + r, y0, color);
@@ -360,7 +360,7 @@ void ST7789_DrawCircle(uint16_t x0, uint16_t y0, uint8_t r, uint16_t color)
 		ST7789_DrawPixel(x0 + y, y0 - x, color);
 		ST7789_DrawPixel(x0 - y, y0 - x, color);
 	}
-	ST7789_UnSelect();
+
 }
 
 /**
@@ -379,10 +379,10 @@ void ST7789_DrawImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uint
 	if ((y + h - 1) >= ST7789_HEIGHT)
 		return;
 
-	ST7789_Select();
+
 	ST7789_SetAddressWindow(x, y, x + w - 1, y + h - 1);
 	ST7789_WriteData((uint8_t *)data, sizeof(uint16_t) * w * h);
-	ST7789_UnSelect();
+
 }
 
 /**
@@ -392,9 +392,9 @@ void ST7789_DrawImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uint
  */
 void ST7789_InvertColors(uint8_t invert)
 {
-	ST7789_Select();
+
 	ST7789_WriteCommand(invert ? 0x21 /* INVON */ : 0x20 /* INVOFF */);
-	ST7789_UnSelect();
+
 }
 
 /** 
@@ -409,7 +409,7 @@ void ST7789_InvertColors(uint8_t invert)
 void ST7789_WriteChar(uint16_t x, uint16_t y, char ch, FontDef font, uint16_t color, uint16_t bgcolor)
 {
 	uint32_t i, b, j;
-	ST7789_Select();
+
 	ST7789_SetAddressWindow(x, y, x + font.width - 1, y + font.height - 1);
 
 	for (i = 0; i < font.height; i++) {
@@ -425,7 +425,7 @@ void ST7789_WriteChar(uint16_t x, uint16_t y, char ch, FontDef font, uint16_t co
 			}
 		}
 	}
-	ST7789_UnSelect();
+
 }
 
 /** 
@@ -439,7 +439,7 @@ void ST7789_WriteChar(uint16_t x, uint16_t y, char ch, FontDef font, uint16_t co
  */
 void ST7789_WriteString(uint16_t x, uint16_t y, const char *str, FontDef font, uint16_t color, uint16_t bgcolor)
 {
-	ST7789_Select();
+
 	while (*str) {
 		if (x + font.width >= ST7789_WIDTH) {
 			x = 0;
@@ -458,7 +458,7 @@ void ST7789_WriteString(uint16_t x, uint16_t y, const char *str, FontDef font, u
 		x += font.width;
 		str++;
 	}
-	ST7789_UnSelect();
+
 }
 
 /** 
@@ -470,7 +470,7 @@ void ST7789_WriteString(uint16_t x, uint16_t y, const char *str, FontDef font, u
  */
 void ST7789_DrawFilledRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color)
 {
-	ST7789_Select();
+
 	uint8_t i;
 
 	/* Check input parameters */
@@ -493,7 +493,7 @@ void ST7789_DrawFilledRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, 
 		/* Draw lines */
 		ST7789_DrawLine(x, y + i, x + w, y + i, color);
 	}
-	ST7789_UnSelect();
+
 }
 
 /** 
@@ -504,12 +504,12 @@ void ST7789_DrawFilledRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, 
  */
 void ST7789_DrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3, uint16_t color)
 {
-	ST7789_Select();
+
 	/* Draw lines */
 	ST7789_DrawLine(x1, y1, x2, y2, color);
 	ST7789_DrawLine(x2, y2, x3, y3, color);
 	ST7789_DrawLine(x3, y3, x1, y1, color);
-	ST7789_UnSelect();
+
 }
 
 /** 
@@ -520,7 +520,7 @@ void ST7789_DrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uin
  */
 void ST7789_DrawFilledTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3, uint16_t color)
 {
-	ST7789_Select();
+
 	int16_t deltax = 0, deltay = 0, x = 0, y = 0, xinc1 = 0, xinc2 = 0,
 			yinc1 = 0, yinc2 = 0, den = 0, num = 0, numadd = 0, numpixels = 0,
 			curpixel = 0;
@@ -577,7 +577,7 @@ void ST7789_DrawFilledTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y
 		x += xinc2;
 		y += yinc2;
 	}
-	ST7789_UnSelect();
+
 }
 
 /** 
@@ -589,7 +589,7 @@ void ST7789_DrawFilledTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y
  */
 void ST7789_DrawFilledCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
 {
-	ST7789_Select();
+
 	int16_t f = 1 - r;
 	int16_t ddF_x = 1;
 	int16_t ddF_y = -2 * r;
@@ -618,7 +618,7 @@ void ST7789_DrawFilledCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
 		ST7789_DrawLine(x0 + y, y0 + x, x0 - y, y0 + x, color);
 		ST7789_DrawLine(x0 + y, y0 - x, x0 - y, y0 - x, color);
 	}
-	ST7789_UnSelect();
+
 }
 
 
@@ -629,9 +629,9 @@ void ST7789_DrawFilledCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
  */
 void ST7789_TearEffect(uint8_t tear)
 {
-	ST7789_Select();
+
 	ST7789_WriteCommand(tear ? 0x35 /* TEON */ : 0x34 /* TEOFF */);
-	ST7789_UnSelect();
+
 }
 
 
