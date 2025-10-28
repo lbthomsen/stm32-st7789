@@ -145,6 +145,10 @@ int main(void)
 
     ST7789_Init();
 
+    HAL_Delay(50);
+
+    //ST7789_Fill_Color(GREEN);
+
     ST7789_Test();
 
   /* USER CODE END 2 */
