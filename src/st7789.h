@@ -1,52 +1,10 @@
 #ifndef __ST7789_H
 #define __ST7789_H
-
+#include "st7789_config.h"
 #include "fonts.h"
 #include "main.h"
 
-/* choose a Hardware SPI port to use. */
-#define ST7789_SPI_PORT hspi1
 extern SPI_HandleTypeDef ST7789_SPI_PORT;
-
-/* choose whether use DMA or not */
-#define USE_DMA
-
-/* If u need CS control, comment below*/
-//#define CFG_NO_CS
-
-/* Pin connection*/
-#define ST7789_RST_PORT ST7789_RST_GPIO_Port
-#define ST7789_RST_PIN  ST7789_RST_Pin
-#define ST7789_DC_PORT  ST7789_DC_GPIO_Port
-#define ST7789_DC_PIN   ST7789_DC_Pin
-
-#ifndef CFG_NO_CS
-#define ST7789_CS_PORT  ST7789_CS_GPIO_Port
-#define ST7789_CS_PIN   ST7789_CS_Pin
-#endif
-
-/* If u need Backlight control, uncomment below */
-//#define BLK_PORT
-//#define BLK_PIN
-
-
-/*
- * Comment one to use another.
- * 3 parameters can be choosed
- * 135x240(0.96 inch) & 240x240(1.3inch) & 170x320(1.9inch)
- * X_SHIFT & Y_SHIFT are used to adapt different display's resolution
- */
-
-/* Choose a type you are using */
-//#define USING_135X240
-#define USING_240X240
-//#define USING_170X320
-
-/* Choose a display rotation you want to use: (0-3) */
-//#define ST7789_ROTATION 0
-//#define ST7789_ROTATION 1
-#define ST7789_ROTATION 2				//  use Normally on 240x240
-//#define ST7789_ROTATION 3
 
 #ifdef USING_135X240
 
@@ -82,28 +40,28 @@ extern SPI_HandleTypeDef ST7789_SPI_PORT;
 
 #ifdef USING_240X240
 
-    #define ST7789_WIDTH 240
-    #define ST7789_HEIGHT 240
+#define ST7789_WIDTH 240
+#define ST7789_HEIGHT 240
 
-		#if ST7789_ROTATION == 0
-			#define X_SHIFT 0
-			#define Y_SHIFT 80
-		#elif ST7789_ROTATION == 1
-			#define X_SHIFT 80
-			#define Y_SHIFT 0
-		#elif ST7789_ROTATION == 2
-			#define X_SHIFT 0
-			#define Y_SHIFT 0
-		#elif ST7789_ROTATION == 3
-			#define X_SHIFT 0
-			#define Y_SHIFT 0
-		#endif
+#if ST7789_ROTATION == 0
+#define X_SHIFT 0
+#define Y_SHIFT 80
+#elif ST7789_ROTATION == 1
+            #define X_SHIFT 80
+            #define Y_SHIFT 0
+        #elif ST7789_ROTATION == 2
+            #define X_SHIFT 0
+            #define Y_SHIFT 0
+        #elif ST7789_ROTATION == 3
+            #define X_SHIFT 0
+            #define Y_SHIFT 0
+        #endif
 
 #endif
 
 #ifdef USING_170X320
 
-	#if ST7789_ROTATION == 0
+    #if ST7789_ROTATION == 0
         #define ST7789_WIDTH 170
         #define ST7789_HEIGHT 320
         #define X_SHIFT 35
@@ -202,6 +160,7 @@ extern SPI_HandleTypeDef ST7789_SPI_PORT;
 #define ST7789_MADCTL_ML  0x10
 /* RGB/BGR Order ('0' = RGB, '1' = BGR) */
 #define ST7789_MADCTL_RGB 0x00
+#define ST7789_MADCTL_BGR 0x08
 
 #define ST7789_RDID1   0xDA
 #define ST7789_RDID2   0xDB

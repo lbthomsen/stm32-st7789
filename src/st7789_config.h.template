@@ -1,0 +1,46 @@
+/**
+ ******************************************************************************
+ * @file           : st7789_config.h
+ * @brief          : ST7789 library configuration
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2025 Lars Boegild Thomsen <lbthomsen@gmail.com>
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ * Copy this template to another folder and rename it to st7789_config.h
+ *
+ ******************************************************************************
+ */
+
+#ifndef INC_ST7789_CONFIG_H_
+#define INC_ST7789_CONFIG_H_
+
+/* choose a Hardware SPI port to use. */
+#define ST7789_SPI_PORT hspi3
+
+/* choose whether use DMA or not */
+#define USE_DMA 1
+
+/* If u need CS control, comment below*/
+//#define CFG_NO_CS
+/* Pin connection*/
+#define ST7789_RST_PORT TFT_RST_GPIO_Port
+#define ST7789_RST_PIN  TFT_RST_Pin
+#define ST7789_DC_PORT  TFT_DC_GPIO_Port
+#define ST7789_DC_PIN   TFT_DC_Pin
+
+#ifndef CFG_NO_CS
+#define ST7789_CS_PORT  TFT_CS_GPIO_Port
+#define ST7789_CS_PIN   TFT_CS_Pin
+#endif
+
+/* If u need Backlight control, uncomment below */
+#define BLK_PORT TFT_BL_GPIO_Port
+#define BLK_PIN  TFT_BL_Pin
+
+#endif /* INC_ST7789_CONFIG_H_ */
