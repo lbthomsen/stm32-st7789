@@ -2,7 +2,7 @@
 ../Core/Src/main.c:310:13:MX_DMA_Init	1
 ../Core/Src/main.c:69:5:_write	3
 ../Core/Src/main.c:82:6:HAL_GPIO_EXTI_Callback	6
-../Core/Src/main.c:395:6:Error_Handler	1
+../Core/Src/main.c:398:6:Error_Handler	1
 ../Core/Src/main.c:277:13:MX_USART1_UART_Init	1
 ../Core/Src/main.c:237:13:MX_SPI3_Init	1
 ../Core/Src/main.c:186:6:SystemClock_Config	1

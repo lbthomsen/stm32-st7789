@@ -141,7 +141,7 @@ void ST7789_Init(void)
     ST7789_RST_Clr();
     HAL_Delay(50);
     ST7789_RST_Set();
-    HAL_Delay(100);
+    HAL_Delay(200);
 
     ST7789_WriteCommand(ST7789_COLMOD);     //  Set color mode
     ST7789_WriteSmallData(ST7789_COLOR_MODE_16bit);

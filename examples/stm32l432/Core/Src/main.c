@@ -147,7 +147,7 @@ int main(void)
 
     HAL_Delay(50);
 
-    //ST7789_Fill_Color(GREEN);
+    //ST7789_Fill_Color(BLUE);
 
     ST7789_Test();
 
@@ -341,7 +341,10 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(TFT_BL_GPIO_Port, TFT_BL_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, TFT_CS_Pin|TFT_DC_Pin|TFT_RST_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, TFT_CS_Pin|TFT_RST_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(TFT_DC_GPIO_Port, TFT_DC_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : ENT_Pin RGT_Pin */
   GPIO_InitStruct.Pin = ENT_Pin|RGT_Pin;
