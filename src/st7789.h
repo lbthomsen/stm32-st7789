@@ -187,6 +187,45 @@ extern SPI_HandleTypeDef ST7789_SPI_PORT;
 
 #define ABS(x) ((x) > 0 ? (x) : -(x))
 
+/*
+ * Typedefs
+ */
+typedef enum {
+    OK,
+    Err
+} st7790_return_t;
+
+typedef struct {
+    SPI_HandleTypeDef *spi;
+    GPIO_TypeDef *rst_port;
+    uint16_t rst_pin;
+    GPIO_TypeDef *cd_port;
+    uint16_t cd_pin;
+    GPIO_TypeDef *cs_port;
+    uint16_t cs_pin;
+    GPIO_TypeDef *bl_port;
+    uint16_t bl_pin;
+    uint16_t *dma_buffer;
+} st7789_handle_t;
+
+/*
+ * Initialize library
+ */
+
+st7790_return_t st7789_init(
+        st7789_handle_t *st7789,
+        SPI_HandleTypeDef *spi,
+        GPIO_TypeDef *rst_port,
+        uint16_t rst_pin,
+        GPIO_TypeDef *cd_port,
+        uint16_t cd_pin,
+        GPIO_TypeDef *cs_port,
+        uint16_t cs_pin,
+        GPIO_TypeDef *bl_port,
+        uint16_t bl_pin,
+        uint8_t *dma_buffer
+        );
+
 /* Basic functions. */
 void ST7789_Init(void);
 void ST7789_SetRotation(uint8_t m);

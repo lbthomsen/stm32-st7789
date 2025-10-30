@@ -73,6 +73,36 @@ static void ST7789_WriteSmallData(uint8_t data)
 }
 
 /**
+ * @brief Initialize the ST7789 Library
+ *
+ * @return st7789_return_t enum Ok/Err
+ */
+st7790_return_t st7789_init(
+        st7789_handle_t *st7789,
+        SPI_HandleTypeDef *spi,
+        GPIO_TypeDef *rst_port,
+        uint16_t rst_pin,
+        GPIO_TypeDef *cd_port,
+        uint16_t cd_pin,
+        GPIO_TypeDef *cs_port,
+        uint16_t cs_pin,
+        GPIO_TypeDef *bl_port,
+        uint16_t bl_pin,
+        uint8_t *dma_buffer
+        )
+{
+    st7790_return_t ret = OK;
+
+    // First set the values in the handle
+    st7789->spi = spi;
+    st7789->rst_port = rst_port;
+    st7789->rst_pin = rst_pin;
+
+
+    return ret;
+}
+
+/**
  * @brief Set the rotation direction of the display
  * @param m -> rotation parameter(please refer it in st7789.h)
  * @return none
